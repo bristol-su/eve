@@ -29,7 +29,7 @@ class UpdateScans implements ShouldQueue
         // TODO If more than 2 jobs, clear queue
 
         Redis::throttle('updatescans')->allow(1)->every(20)->then(function() use ($codeReadr) {
-            $scans = $this->codeReadr->scansForEvents(UcEvent::toTrack()->get());
+            $scans = $codeReadr->scansForEvents(UcEvent::toTrack()->get());
             foreach($scans->scan as $scan) {
                 if(Scan::where('ticket_number', $scan->tid)->count() === 0) {
                     Scan::create(['ticket_number' => $scan->tid]);
