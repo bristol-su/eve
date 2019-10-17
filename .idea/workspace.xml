@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f713873-6dd6-454f-a773-b45136f64473" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Jobs/UpdateScans.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/UpdateScans.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Support/CodeReadr/CodeReadrService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/CodeReadr/CodeReadrService.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -220,7 +222,8 @@
       <workItem from="1571131927862" duration="17910000" />
       <workItem from="1571157393395" duration="345000" />
       <workItem from="1571225773398" duration="1914000" />
-      <workItem from="1571235740812" duration="138000" />
+      <workItem from="1571235740812" duration="750000" />
+      <workItem from="1571304863267" duration="987000" />
     </task>
     <servers />
   </component>

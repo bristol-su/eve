@@ -62,7 +62,7 @@ class CodeReadrService
             return $event->codeReadrService->service_id;
         });
         return $this->client->request('scans', 'retrieve', [
-            'service_id' => $events->join(', ')
+            'service_id' => $services->join(', ')
         ]);
     }
 
