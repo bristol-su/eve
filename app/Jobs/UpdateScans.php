@@ -17,7 +17,7 @@ class UpdateScans implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $tries = 1;
+    public $tries = 10;
 
     public function __construct()
     {

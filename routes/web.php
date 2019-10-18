@@ -20,3 +20,4 @@ Route::get('/', 'GuestController@index')->name('guest');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/availability', 'AvailabilityController@index')->name('availability');
 Route::get('/codereadr', 'CodeReadrController@index')->name('codereadr');
+Route::get('/view/{airtable_view}', 'AirtableViewController@show')->name('view');

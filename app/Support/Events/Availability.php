@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Jsonable;
 class Availability implements Arrayable, Jsonable
 {
 
-    private $location;
+    public $location;
     public $from;
     public $to;
 

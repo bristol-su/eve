@@ -3,8 +3,11 @@
 namespace App\Providers;
 
 use App\Console\Commands\UpdateICalFeed;
+use App\Support\Events\AvailabilityFilter;
+use App\Support\Events\Contracts\AvailabilityFilter as AvailabilityFilterContract;
 use App\Support\Events\Contracts\EventRepository as EventRepositoryContract;
 use App\Support\Events\DatabaseEventRepository;
+use App\Support\Events\Filters\RoomOpen;
 use App\Support\Events\IcalEventRepository;
 use App\Support\ICal\JohnGrogg\Event;
 use App\Support\ICal\Contracts\Event as EventContract;
@@ -29,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ICalContract::class, function($app) {
             return new ICal($app->make(JohnGroggICal::class), config('app.calurl'));
         });
+
+        $this->app->singleton(AvailabilityFilterContract::class, AvailabilityFilter::class);
     }
 
     /**
@@ -49,5 +54,7 @@ class AppServiceProvider extends ServiceProvider
             Client::class,
             new Client(config('codereadr.key'))
         );
+
+        \App\Support\Events\Facade\AvailabilityFilter::register(new RoomOpen);
     }
 }

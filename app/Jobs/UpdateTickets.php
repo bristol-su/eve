@@ -19,7 +19,7 @@ class UpdateTickets implements ShouldQueue
 
     public $event;
 
-    public $tries = 1;
+    public $tries = 10;
 
     /**
      * Create a new job instance.

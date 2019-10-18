@@ -55,6 +55,7 @@ class UpdateICalFeed extends Command
         $events = app(EventRepository::class)->all();
         $icalEventsUsed = [];
         foreach($events as $event) {
+            dd($event);
             $icalEvent = IcalEvent::where('uid', $event->uid())->with('event')->first();
             if($icalEvent) {
                 $icalEventsUsed[] = $icalEvent->id;
