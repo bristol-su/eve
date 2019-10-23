@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="8f713873-6dd6-454f-a773-b45136f64473" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Listeners/UpdateEventInformation.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Listeners/UpdateTicketTypes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Listeners/UpdateTicketTypes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/horizon.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/horizon.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -230,6 +234,7 @@
       <workItem from="1571742907966" duration="12344000" />
       <workItem from="1571761884850" duration="949000" />
       <workItem from="1571817255172" duration="11083000" />
+      <workItem from="1571830557427" duration="274000" />
     </task>
     <servers />
   </component>

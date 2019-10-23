@@ -10,7 +10,6 @@ use App\Events\TicketValidityUpdated;
 use App\Listeners\AddTicketToCodeReadr;
 use App\Listeners\ChangeCodeReadrValidity;
 use App\Listeners\RedeemTicketOnUnionCloud;
-use App\Listeners\UpdateEventInformation;
 use App\Listeners\UpdateTicketTypes;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;

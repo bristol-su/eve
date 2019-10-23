@@ -143,7 +143,7 @@ return [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['urgent', 'high', 'updatescans', 'updatetickets'],
+                'queue' => ['urgent', 'high', 'updatetickettypes', 'updatescans', 'updatetickets'],
                 'balance' => 'simple',
                 'processes' => 10,
                 'tries' => 3,
@@ -153,7 +153,7 @@ return [
         'local' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['urgent', 'high', 'updatescans', 'updatetickets'],
+                'queue' => ['urgent', 'high', 'updatetickettypes', 'updatescans', 'updatetickets'],
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 3,

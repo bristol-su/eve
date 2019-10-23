@@ -15,7 +15,7 @@ class UpdateTicketTypes implements ShouldQueue
 
     public $tries = 1000;
 
-    public $queue = 'urgent';
+    public $queue = 'updatetickettypes';
 
 
     /**
