@@ -11,11 +11,11 @@ class AvailabilityFilter implements Contracts\AvailabilityFilter
      */
     private $filters = [];
 
-    public function isInvalid(Availability $availability): bool
+    public function available(Availability $availability): bool
     {
         $filter = $this->getChain();
-        $result = $filter->isInvalid($availability);
-        return ($result?:false);
+        $result = $filter->unavailable($availability);
+        return !($result??false);
     }
 
     public function getChain()

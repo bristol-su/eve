@@ -1921,8 +1921,10 @@ __webpack_require__.r(__webpack_exports__);
       filters: {
         dateFrom: null,
         dateTo: null,
-        timeTo: null,
-        timeFrom: null,
+        hourFrom: 0,
+        minuteFrom: 0,
+        hourTo: 23,
+        minuteTo: 59,
         location: []
       },
       includePencils: true,
@@ -1944,10 +1946,10 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       if (this.includePencils) {
+        var params = this.params;
+        params.in_name = this.inNameSearch;
         this.$http.get('/api/pencils', {
-          params: {
-            in_name: this.inNameSearch
-          }
+          params: params
         }).then(function (response) {
           return _this.pencils = response.data;
         })["catch"](function (error) {
@@ -2102,10 +2104,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EndTime",
   props: {
-    value: {
+    hour: {
+      required: true,
+      "default": null
+    },
+    minute: {
       required: true,
       "default": null
     }
@@ -2267,10 +2279,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "StartTime",
   props: {
-    value: {
+    hour: {
+      required: true,
+      "default": null
+    },
+    minute: {
       required: true,
       "default": null
     }
@@ -2430,20 +2452,26 @@ __webpack_require__.r(__webpack_exports__);
     LinkEvents: _linkevent_LinkEvents__WEBPACK_IMPORTED_MODULE_1__["default"],
     CurrentEvents: _events_CurrentEvents__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: {
-    tracking: {
-      type: Array,
-      "default": function _default() {
-        return [];
-      }
-    }
-  },
   data: function data() {
-    return {};
+    return {
+      tracking: []
+    };
+  },
+  created: function created() {
+    this.loadEvents();
   },
   methods: {
     appendEvent: function appendEvent(event) {
       this.tracking.push(event);
+    },
+    loadEvents: function loadEvents() {
+      var _this = this;
+
+      this.$http.get('/api/uc_events/track').then(function (response) {
+        return _this.tracking = response.data;
+      })["catch"](function (error) {
+        return alert('Could not find tracking events');
+      });
     }
   },
   computed: {}
@@ -2475,7 +2503,29 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   data: function data() {
-    return {};
+    return {
+      fields: [{
+        key: 'id',
+        label: 'Event ID',
+        sortable: true
+      }, {
+        key: 'name',
+        label: 'Name',
+        sortable: true
+      }, {
+        key: 'start_date_time',
+        label: 'Start Date',
+        sortable: true
+      }, {
+        key: 'ticket_sold_count',
+        label: 'Tickets Sold',
+        sortable: true
+      }, {
+        key: 'ticket_redeem_count',
+        label: 'Tickets Redeemed',
+        sortable: true
+      }]
+    };
   },
   methods: {},
   computed: {}
@@ -2535,33 +2585,38 @@ __webpack_require__.r(__webpack_exports__);
       event: null
     };
   },
-  created: function created() {
-    this.loadEvents(1);
-  },
   methods: {
-    loadEvents: function loadEvents(page) {
-      var _this = this;
-
-      this.$http.get('/api/uc_events', {
+    onSearch: function onSearch(search, loading) {
+      if (search !== '') {
+        loading(true);
+        this.loadEvents(search, loading, this);
+      }
+    },
+    loadEvents: lodash__WEBPACK_IMPORTED_MODULE_1___default.a.debounce(function (search, loading, vm) {
+      loading(true);
+      this.$http.get('/api/uc_events/search', {
         params: {
-          page: page
+          search: search
         }
       }).then(function (response) {
-        _this.events = _this.events.concat(response.data);
-
-        _this.loadEvents(page + 1);
+        return vm.events = response.data;
+      })["catch"](function (error) {
+        vm.events = [];
+        console.log(error);
+      }).then(function () {
+        return loading(false);
       });
-    },
+    }, 1000),
     trackEvent: function trackEvent() {
-      var _this2 = this;
+      var _this = this;
 
       if (this.event !== null) {
-        this.$http.post('/api/uc_events/track', {
-          event_id: this.event.id
-        }).then(function (response) {
+        this.$http.post('/api/uc_events/' + this.event.id + '/track').then(function (response) {
           alert('Tracking event!');
 
-          _this2.$emit('event', response.data);
+          _this.$emit('event', response.data);
+
+          _this.event = null;
         })["catch"](function (error) {
           return alert('Could not track event');
         });
@@ -84335,12 +84390,17 @@ var render = function() {
                 { attrs: { lg: "3", sm: "6", xs: "12" } },
                 [
                   _c("start-time", {
-                    model: {
-                      value: _vm.filters.timeFrom,
-                      callback: function($$v) {
-                        _vm.$set(_vm.filters, "timeFrom", $$v)
+                    attrs: {
+                      hour: _vm.filters.hourFrom,
+                      minute: _vm.filters.minuteFrom
+                    },
+                    on: {
+                      hour: function($event) {
+                        _vm.filters.hourFrom = $event
                       },
-                      expression: "filters.timeFrom"
+                      minute: function($event) {
+                        _vm.filters.minuteFrom = $event
+                      }
                     }
                   })
                 ],
@@ -84352,12 +84412,17 @@ var render = function() {
                 { attrs: { lg: "3", sm: "6", xs: "12" } },
                 [
                   _c("end-time", {
-                    model: {
-                      value: _vm.filters.timeTo,
-                      callback: function($$v) {
-                        _vm.$set(_vm.filters, "timeTo", $$v)
+                    attrs: {
+                      hour: _vm.filters.hourTo,
+                      minute: _vm.filters.minuteTo
+                    },
+                    on: {
+                      hour: function($event) {
+                        _vm.filters.hourTo = $event
                       },
-                      expression: "filters.timeTo"
+                      minute: function($event) {
+                        _vm.filters.minuteTo = $event
+                      }
                     }
                   })
                 ],
@@ -84604,10 +84669,19 @@ var render = function() {
         },
         [
           _c("b-form-input", {
-            attrs: { id: "end-time", value: _vm.value, type: "time" },
+            attrs: { id: "end-time-hour", value: _vm.hour, type: "number" },
             on: {
               input: function($event) {
-                return _vm.$emit("input", $event)
+                return _vm.$emit("hour", $event)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("b-form-input", {
+            attrs: { id: "end-time-minute", value: _vm.minute, type: "number" },
+            on: {
+              input: function($event) {
+                return _vm.$emit("minute", $event)
               }
             }
           })
@@ -84783,10 +84857,23 @@ var render = function() {
         },
         [
           _c("b-form-input", {
-            attrs: { id: "start-time", value: _vm.value, type: "time" },
+            attrs: { id: "start-time-hour", value: _vm.hour, type: "number" },
             on: {
               input: function($event) {
-                return _vm.$emit("input", $event)
+                return _vm.$emit("hour", $event)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("b-form-input", {
+            attrs: {
+              id: "start-time-minute",
+              value: _vm.minute,
+              type: "number"
+            },
+            on: {
+              input: function($event) {
+                return _vm.$emit("minute", $event)
               }
             }
           })
@@ -84950,7 +85037,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("b-table", { attrs: { items: _vm.events } })], 1)
+  return _c(
+    "div",
+    [_c("b-table", { attrs: { items: _vm.events, fields: _vm.fields } })],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -84981,6 +85072,7 @@ var render = function() {
         "v-select",
         {
           attrs: { label: "name", options: _vm.events },
+          on: { search: _vm.onSearch },
           scopedSlots: _vm._u([
             {
               key: "option",

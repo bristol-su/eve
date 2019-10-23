@@ -22,9 +22,9 @@ abstract class Filter
         if($this->successor === null) {
             return null;
         }
-        return $this->successor->isInvalid($availability);
+        return $this->successor->unavailable($availability);
     }
 
-    abstract public function isInvalid(Availability $availability): ?bool;
+    abstract public function unavailable(Availability $availability): ?bool;
 
 }

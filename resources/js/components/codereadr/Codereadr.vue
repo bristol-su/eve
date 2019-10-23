@@ -17,22 +17,25 @@
     export default {
         name: "Codereadr",
         components: {LinkEvents, CurrentEvents},
-        props: {
-            tracking: {
-                type: Array,
-                default: function() {
-                    return [];
-                }
+
+        data() {
+            return {
+                tracking: []
             }
         },
 
-        data() {
-            return {}
+        created() {
+            this.loadEvents();
         },
 
         methods: {
             appendEvent(event) {
                 this.tracking.push(event);
+            },
+            loadEvents() {
+                this.$http.get('/api/uc_events/track')
+                    .then(response => this.tracking = response.data)
+                    .catch(error => alert('Could not find tracking events'));
             }
         },
 

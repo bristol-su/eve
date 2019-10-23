@@ -2,26 +2,29 @@
 
 namespace App\Support\Events;
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class AvailabilityFinder
 {
 
-    public function find($startDateTime, $endDateTime, $events)
+    public function find(Carbon $startDateTime, Carbon $endDateTime, $hourFrom, $minuteFrom, $hourTo, $minuteTo, $minuteInterval=60)
     {
-        $locationGroupedEvents = $events->sortByDate('start', SORT_ASC)->groupBy('location');
-        $availabilities = new Collection;
-        foreach($locationGroupedEvents as $location => $locationEvents) {
-            $availableAfter = null;
-            foreach($locationEvents as $event) {
-                if($availableAfter !== null) {
-                    $availabilities->push(
-                        new Availability($location, $availableAfter, $event->start)
-                    );
-                }
-                $availableAfter = $event->end;
+        $startDateTime = $startDateTime->startOfDay();
+        $endDateTime = $endDateTime->endOfDay();
+        $availabilities = collect();
+        $currentDate = $startDateTime->copy();
+        while($currentDate->lt($endDateTime)) {
+            $currentDate->setTime($hourFrom, $minuteFrom);
+            $dailyEndTime = $currentDate->copy()->setTime($hourTo, $minuteTo);
+            while($currentDate->lt($dailyEndTime)) {
+                $availableFrom = $currentDate->copy();
+                $currentDate->addMinutes($minuteInterval);
+                $availabilities->push(new Availability($availableFrom, $currentDate->copy()));
             }
+            $currentDate->addDay();
         }
+
         return $availabilities;
     }
 

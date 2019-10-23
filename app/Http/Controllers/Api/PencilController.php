@@ -19,7 +19,16 @@ class PencilController extends Controller
 
     public function index(Request $request)
     {
-        $input = $request->input('in_name', 'pencil');
-        return Event::where('summary', 'LIKE', '%'. $input .'%')->get();
+        return Event::withName($request->input('in_name', 'pencil'))
+            ->withLocation($request->input('location', []))
+            ->betweenDates($request->input('dateFrom'), $request->input('dateTo'))
+            ->get()
+            ->filter(function($event) use ($request) {
+                $from = $request->input('hourFrom', 0) . ':' . $request->input('minuteFrom', 0) . ':00';
+                $to = $request->input('hourTo', 23) . ':' . $request->input('minuteTo', 59) . ':59';
+                return ($event->start->toTimeString() >= $from && $event->start->toTimeString() <= $to)
+                    || ($event->end->toTimeString() >= $from && $event->end->toTimeString() <= $to);
+            });
+
     }
 }

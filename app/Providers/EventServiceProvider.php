@@ -31,9 +31,6 @@ class EventServiceProvider extends ServiceProvider
         TicketValidityUpdated::class => [
             ChangeCodeReadrValidity::class
         ],
-        EventCreated::class => [
-            UpdateEventInformation::class,
-        ],
         EventUpdated::class => [
             UpdateTicketTypes::class
         ],

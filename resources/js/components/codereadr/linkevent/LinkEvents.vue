@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-select label="name" :options="events" v-model="event">
+        <v-select @search="onSearch" label="name" :options="events" v-model="event">
             <template slot="no-options">
                 Type to search UnionCloud events
             </template>
@@ -43,32 +43,36 @@
             }
         },
 
-        created() {
-            this.loadEvents(1);
-        },
-
         methods: {
-            loadEvents(page) {
-                this.$http.get('/api/uc_events', {
+            onSearch(search, loading) {
+                if(search !== '') {
+                    loading(true);
+                    this.loadEvents(search, loading, this);
+                }
+            },
+
+            loadEvents: _.debounce(function(search, loading, vm) {
+                loading(true);
+                this.$http.get('/api/uc_events/search', {
                     params: {
-                        page: page
+                        search: search
                     }
                 })
-                    .then(response => {
-                        this.events = this.events.concat(response.data);
-                        this.loadEvents(page+1);
-                    });
-            },
+                    .then(response => vm.events = response.data)
+                    .catch(error => {
+                        vm.events = [];
+                        console.log(error);
+                    })
+                    .then(() => loading(false));
+            }, 1000),
 
             trackEvent() {
                 if(this.event !== null) {
-                    this.$http.post('/api/uc_events/track', {
-                        event_id: this.event.id
-                    })
+                    this.$http.post('/api/uc_events/' + this.event.id + '/track')
                         .then(response => {
                             alert('Tracking event!');
                             this.$emit('event', response.data);
-
+                            this.event = null;
                         })
                         .catch(error => alert('Could not track event'));
                 }

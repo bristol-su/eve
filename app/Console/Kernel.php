@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\UpdateICalFeed;
 use App\Console\Commands\UpdateScans;
 use App\Console\Commands\UpdateTickets;
+use App\Console\Commands\UpdateUnionCloudEvents;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,6 +29,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command(UpdateICalFeed::class)->everyFiveMinutes();
+        $schedule->command(UpdateUnionCloudEvents::class)->everyFiveMinutes();
         $schedule->command(UpdateScans::class)->everyMinute();
         $schedule->command(UpdateTickets::class)->everyMinute();
     }

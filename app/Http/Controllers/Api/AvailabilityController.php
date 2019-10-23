@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Event;
 use App\Http\Controllers\Controller;
 use App\Support\Events\AvailabilityFinder;
+use App\Support\Events\AvailabilityJoiner;
 use App\Support\Events\AvailabilityTuner;
 use App\Support\Events\Contracts\EventRepository;
 use App\Support\Events\Facade\AvailabilityFilter;
@@ -19,10 +20,36 @@ class AvailabilityController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function index(Request $request, AvailabilityTuner $tuner)
+    public function index(Request $request, AvailabilityFinder $finder)
     {
-        $startDateTime = Carbon::parse($request->input('dateFrom'))->setTime(0, 0, 0, 0);
-        $endDateTime = Carbon::parse($request->input('dateTo'))->setTime(23, 59, 59, 9999999);
+
+        $startDateTime = Carbon::parse($request->input('dateFrom'));
+        $endDateTime = Carbon::parse($request->input('dateTo'));
+
+        $availabilities = collect();
+        $availableSlots = $finder->find(
+            $startDateTime, $endDateTime,
+            $request->input('hourFrom', 0),
+            $request->input('minuteFrom', 0),
+            $request->input('hourTo', 0),
+            $request->input('minuteTo', 0)
+        );
+
+        foreach($request->input('location', []) as $location) {
+            $locationAvailabilities = $availableSlots->map(function($availability) use ($location) {
+                $availability->location = $location;
+                return $availability;
+            })->filter(function($availability) {
+                return AvailabilityFilter::available($availability);
+            })->values();
+
+            $availabilities = $availabilities->concat(
+                AvailabilityJoiner::join($locationAvailabilities)
+            );
+        }
+
+        return $availabilities;
+
         $events = Event::where('start', '>=', $startDateTime)
             ->where('end', '<=', $endDateTime)
             ->get()
@@ -30,14 +57,6 @@ class AvailabilityController extends Controller
                 return count($request->input('location', [])) === 0
                     || in_array($event->location, $request->input('location', []));
             });
-        $availabilityFinder = new AvailabilityFinder();
-        $availabilities = $availabilityFinder->find($startDateTime, $endDateTime, $events)->filter(function($availability) use ($request) {
-            return (!$request->has('timeFrom') || $availability->from->format('HH:mm') < $request->input('timeFrom'))
-                && (!$request->has('timeTo') || $availability->to->format('HH:mm') > $request->input('timeTo'));
-        })->values();
 
-        return $tuner->tune($availabilities);
-        // Check room opening times
-        // Check exceptions.
     }
 }

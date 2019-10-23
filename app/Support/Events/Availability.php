@@ -11,10 +11,10 @@ class Availability implements Arrayable, Jsonable
     public $location;
     public $from;
     public $to;
+    public $pencil = false;
 
-    public function __construct($location, $from, $to)
+    public function __construct($from, $to)
     {
-        $this->location = $location;
         $this->from = $from;
         $this->to = $to;
     }
@@ -45,7 +45,8 @@ class Availability implements Arrayable, Jsonable
         return [
             'location' => $this->location(),
             'from' => $this->from(),
-            'to' => $this->to()
+            'to' => $this->to(),
+            'pencil' => $this->pencil
         ];
     }
 

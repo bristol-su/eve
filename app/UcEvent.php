@@ -21,7 +21,8 @@ class UcEvent extends Model
 
     protected $casts = [
         'start_date_time' => 'datetime',
-        'end_date_time' => 'datetime'
+        'end_date_time' => 'datetime',
+        'tracking' => 'boolean'
     ];
 
     public function ticketTypes()
@@ -36,7 +37,8 @@ class UcEvent extends Model
 
     public function scopeToTrack(Builder $query)
     {
-        $query->where('end_date_time', '>', Carbon::now()->subHours(5));
+        $query->where('tracking', true)
+            ->where('end_date_time', '>', Carbon::now()->subHours(12));
     }
 
 }

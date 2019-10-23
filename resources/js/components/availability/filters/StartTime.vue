@@ -6,10 +6,16 @@
             description="Start time of the event."
         >
             <b-form-input
-                id="start-time"
-                :value="value"
-                @input="$emit('input', $event)"
-                type="time"
+                id="start-time-hour"
+                :value="hour"
+                @input="$emit('hour', $event)"
+                type="number"
+            ></b-form-input>
+            <b-form-input
+                id="start-time-minute"
+                :value="minute"
+                @input="$emit('minute', $event)"
+                type="number"
             ></b-form-input>
         </b-form-group>
     </div>
@@ -20,7 +26,11 @@
         name: "StartTime",
 
         props: {
-            value: {
+            hour: {
+                required: true,
+                default: null
+            },
+            minute: {
                 required: true,
                 default: null
             }

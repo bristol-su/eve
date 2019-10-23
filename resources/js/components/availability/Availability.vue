@@ -9,10 +9,10 @@
                     <date-to v-model="filters.dateTo"></date-to>
                 </b-col>
                 <b-col lg="3" sm="6" xs="12">
-                    <start-time v-model="filters.timeFrom"></start-time>
+                    <start-time :hour="filters.hourFrom" :minute="filters.minuteFrom"  @hour="filters.hourFrom = $event" @minute="filters.minuteFrom = $event"></start-time>
                 </b-col>
                 <b-col lg="3" sm="6" xs="12">
-                    <end-time v-model="filters.timeTo"></end-time>
+                    <end-time :hour="filters.hourTo" :minute="filters.minuteTo"  @hour="filters.hourTo = $event" @minute="filters.minuteTo = $event"></end-time>
                 </b-col>
             </b-row>
             <b-row >
@@ -63,8 +63,10 @@
                 filters: {
                     dateFrom: null,
                     dateTo: null,
-                    timeTo: null,
-                    timeFrom: null,
+                    hourFrom: 0,
+                    minuteFrom: 0,
+                    hourTo: 23,
+                    minuteTo: 59,
                     location: []
                 },
                 includePencils: true,
@@ -76,15 +78,13 @@
             search() {
                 this.availability = [];
                 this.pencils = [];
-                this.$http.get('/api/availability', {
-                    params: this.params
-                })
+                this.$http.get('/api/availability', {params: this.params})
                     .then(response => this.availability = response.data)
                     .catch(error => console.log(error));
                 if(this.includePencils) {
-                    this.$http.get('/api/pencils', {
-                        params: {in_name: this.inNameSearch}
-                    })
+                    let params = this.params;
+                    params.in_name = this.inNameSearch;
+                    this.$http.get('/api/pencils', {params: params})
                         .then(response => this.pencils = response.data)
                         .catch(error => console.log(error));
                 }

@@ -18,5 +18,6 @@ Route::middleware('auth:api')->get('/events', 'Api\EventController@index');
 
 Route::middleware('auth:api')->get('/availability', 'Api\AvailabilityController@index');
 Route::middleware('auth:api')->get('/pencils', 'Api\PencilController@index');
-Route::middleware('auth:api')->get('/uc_events', 'Api\UcEventsController@index');
-Route::middleware('auth:api')->post('/uc_events/track', 'Api\UcEventsController@track');
+Route::middleware('auth:api')->get('/uc_events/search', 'Api\UcEventsController@search');
+Route::middleware('auth:api')->post('/uc_events/{uc_event}/track', 'Api\UcEventsController@track');
+Route::middleware('auth:api')->get('/uc_events/track', 'Api\UcEventsController@indexTrack');

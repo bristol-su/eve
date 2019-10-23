@@ -8,7 +8,7 @@ use App\Support\Events\Availability;
 
 interface AvailabilityFilter
 {
-    public function isInvalid(Availability $availability): bool;
+    public function available(Availability $availability): bool;
 
     public function register(Filter $filter);
 }

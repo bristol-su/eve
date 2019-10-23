@@ -38,4 +38,9 @@ class UnionCloud
         }
         return $attendees;
     }
+
+    public function getAllEvents($page = 1)
+    {
+        return $this->unionCloud->events()->setPage($page)->getAll()->get();
+    }
 }

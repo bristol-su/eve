@@ -7,6 +7,8 @@ use App\Support\Events\AvailabilityFilter;
 use App\Support\Events\Contracts\AvailabilityFilter as AvailabilityFilterContract;
 use App\Support\Events\Contracts\EventRepository as EventRepositoryContract;
 use App\Support\Events\DatabaseEventRepository;
+use App\Support\Events\Filters\EventNotScheduled;
+use App\Support\Events\Filters\ExceptionSpecified;
 use App\Support\Events\Filters\RoomOpen;
 use App\Support\Events\IcalEventRepository;
 use App\Support\ICal\JohnGrogg\Event;
@@ -56,5 +58,7 @@ class AppServiceProvider extends ServiceProvider
         );
 
         \App\Support\Events\Facade\AvailabilityFilter::register(new RoomOpen);
+        \App\Support\Events\Facade\AvailabilityFilter::register(new EventNotScheduled);
+        \App\Support\Events\Facade\AvailabilityFilter::register(new ExceptionSpecified);
     }
 }

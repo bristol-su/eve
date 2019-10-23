@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\UcEvent;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Twigger\UnionCloud\API\Exception\Resource\ResourceNotFoundException;
 use Twigger\UnionCloud\API\UnionCloud;
@@ -11,22 +12,31 @@ use Twigger\UnionCloud\API\UnionCloud;
 class UcEventsController extends Controller
 {
 
-    public function index(Request $request, UnionCloud $unionCloud)
+    public function search(Request $request)
     {
-        try {
-            return array_map(function($event) {
-                return $event->getAttributes();
-            }, $unionCloud->events()->setPage((int)$request->input('page', 1))->getAll()->get()->toArray());
-        } catch (ResourceNotFoundException $e) {
-            return [];
-        }
+        return UcEvent::where('name', 'LIKE', '%' . $request->input('search') . '%')
+            ->where('end_date_time', '>', Carbon::now()->subHours(12))
+            ->get();
     }
 
-    public function track(Request $request)
+    public function track(Request $request, UcEvent $ucEvent)
     {
-        return UcEvent::create([
-            'id' => $request->input('event_id')
-        ]);
+        $ucEvent->tracking = true;
+        $ucEvent->save();
+        return $ucEvent;
+    }
+
+    public function indexTrack(Request $request)
+    {
+        return UcEvent::toTrack()->get()->map(function($event) {
+            $event->ticket_sold_count = $event->ticketTypes->reduce(function($agg, $ticketType) {
+                return $agg + $ticketType->tickets()->where('on_codereadr', true)->count();
+            });
+            $event->ticket_redeem_count = $event->ticketTypes->reduce(function($agg, $ticketType) {
+                return $agg + $ticketType->tickets()->where('redeemed', true)->count();
+            });
+            return $event;
+        });
     }
 
 }
