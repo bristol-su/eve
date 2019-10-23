@@ -8,6 +8,7 @@ use App\Console\Commands\UpdateTickets;
 use App\Console\Commands\UpdateUnionCloudEvents;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Laravel\Horizon\Console\SnapshotCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -32,6 +33,7 @@ class Kernel extends ConsoleKernel
         $schedule->command(UpdateUnionCloudEvents::class)->everyFiveMinutes();
         $schedule->command(UpdateScans::class)->everyMinute();
         $schedule->command(UpdateTickets::class)->everyMinute();
+        $schedule->command(SnapshotCommand::class)->everyFiveMinutes();
     }
 
     /**
