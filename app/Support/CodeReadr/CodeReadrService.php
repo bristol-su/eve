@@ -29,11 +29,10 @@ class CodeReadrService
     public function updateTicketValidity(Ticket $ticket, bool $validity)
     {
         $service = $this->finder->forEvent($ticket->ticketType->ucEvent);
-
         $this->client->request(Client::SECTION_DATABASES, 'upsertvalue', [
             'database_id' => (string) $service->database_id,
             'value' => $ticket->ticket_number,
-            'validity' => ($validity?0:1),
+            'validity' => ($validity?1:0),
             'response' => $ticket->forename . ' ' . $ticket->surname . ' (' . $ticket->ticketType->name . ')'
         ]);
     }
