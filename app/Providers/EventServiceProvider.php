@@ -30,9 +30,6 @@ class EventServiceProvider extends ServiceProvider
         TicketValidityUpdated::class => [
             ChangeCodeReadrValidity::class
         ],
-        EventUpdated::class => [
-            UpdateTicketTypes::class
-        ],
         ScanCreated::class => [
             RedeemTicketOnUnionCloud::class
         ]

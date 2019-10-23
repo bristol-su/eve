@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Support\UnionCloud\UnionCloud;
+use App\TicketType;
 use App\UcEvent;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -62,6 +63,18 @@ class UpdateUnionCloudEvents extends Command
                         'start_date_time' => Carbon::parse($event->start_date_time),
                         'end_date_time' => Carbon::parse($event->end_date_time),
                 ]);
+                if(is_array($event->ticket_types)) {
+                    foreach($event->ticket_types as $ticketType) {
+                        $ticketTypeModel = TicketType::updateOrCreate(
+                            ['id' => $ticketType['id']],
+                            [
+                                'id' => $ticketType['id'],
+                                'name' => $ticketType['name'],
+                                'event_id' => $event->id
+                            ]
+                        );
+                    }
+                }
             }
             // For each event, save it in the DB or update it
             Cache::put(UpdateUnionCloudEvents::class . '.page', $page + 1, 20);
