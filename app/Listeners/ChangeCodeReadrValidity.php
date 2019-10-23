@@ -42,8 +42,8 @@ class ChangeCodeReadrValidity implements ShouldQueue
     {
         Redis::throttle('codereadr')->allow(50)->every(60)->then(function () use ($event) {
             $this->codeReadrService->updateTicketValidity($event->ticket, !$event->ticket->redeemed);
-            $this->ticket->on_codereadr = true;
-            $this->ticket->save();
+            $event->ticket->on_codereadr = true;
+            $event->ticket->save();
         }, function () {
             return $this->release(20);
         });
