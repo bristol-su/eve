@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8f713873-6dd6-454f-a773-b45136f64473" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Support/CodeReadr/CodeReadrService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/CodeReadr/CodeReadrService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/templates/heading.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/templates/heading.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -234,7 +235,8 @@
       <workItem from="1571830557427" duration="919000" />
       <workItem from="1571832842534" duration="868000" />
       <workItem from="1571835244318" duration="896000" />
-      <workItem from="1571836457882" duration="234000" />
+      <workItem from="1571836457882" duration="275000" />
+      <workItem from="1571841660237" duration="111000" />
     </task>
     <servers />
   </component>

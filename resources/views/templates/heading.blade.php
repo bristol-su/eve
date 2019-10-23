@@ -4,7 +4,6 @@
     </div>
 
     <div class="links">
-        <a href="{{route('home')}}">Home</a>
         <a href="{{route('availability')}}">Availability Search</a>
         <a href="{{route('codereadr')}}">CodeReadr Integration</a>
         @foreach(\App\AirtableView::where('user_id', \Illuminate\Support\Facades\Auth::user()->id)->get() as $view)
