@@ -42,7 +42,16 @@ class Event extends Model
 
     public function scopeWithName(Builder $query, $name)
     {
-        $query->where('summary', 'LIKE', '%'. $name .'%');
+        $searches = explode(',', $name);
+        $query->where(function($query) use ($searches){
+            for($i=0;$i<count($searches);$i++){
+                if($i==0){
+                    $query->where('summary', 'LIKE', '%' . $searches[$i] . '%');
+                }else{
+                    $query->orWhere('summary', 'LIKE', '%' . $searches[$i] . '%');
+                }
+            }
+        });
     }
 
     public function scopeWithLocation(Builder $query, $location=[])

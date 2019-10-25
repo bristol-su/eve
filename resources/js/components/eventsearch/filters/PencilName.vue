@@ -1,11 +1,14 @@
 <template>
     <div>
         <b-form-input
-            type="text"
             @input="$emit('input', $event)"
             :value="value"
-        >
+            placeholder="Enter your name"
+            aria-describedby="input-live-help">
+
         </b-form-input>
+        <b-form-text id="input-live-help">Event name to search for.</b-form-text>
+
     </div>
 </template>
 
@@ -16,18 +19,10 @@
         props: {
             value: {
                 required: false,
-                default: 'Pencil',
-                type: String
+                type: String,
+                default: 'Pencil'
             }
-        },
-
-        data() {
-            return {}
-        },
-
-        methods: {},
-
-        computed: {}
+        }
     }
 </script>
 

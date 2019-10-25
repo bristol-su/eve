@@ -20,7 +20,7 @@
                     <location v-model="filters.location"></location>
                 </b-col>
                 <b-col lg="3" sm="6" xs="12">
-                    <pencils v-model="includePencils"></pencils>
+                    <pencil-name v-model="filters.in_name"></pencil-name>
                 </b-col>
             </b-row>
             <b-button type="submit" variant="secondary">Search</b-button>
@@ -29,9 +29,8 @@
 
 
 
-        <b-tabs content-class="mt-3" v-if="availability.length > 0">
-            <b-tab title="Text View" active><text-view :availability="results"></text-view></b-tab>
-            <b-tab title="Table View"><table-view :availability="results"></table-view></b-tab>
+        <b-tabs content-class="mt-3" v-if="events.length > 0">
+            <b-tab title="Table View"><table-view :events="events"></table-view></b-tab>
         </b-tabs>
 
 
@@ -44,20 +43,16 @@
     import StartTime from './filters/StartTime';
     import EndTime from './filters/EndTime';
     import Location from './filters/Location';
-    import Pencils from './filters/Pencils';
-    import TextView from './results/TextView';
     import TableView from './results/TableView';
-    import moment from 'moment';
-
+    import PencilName from './filters/PencilName';
     export default {
-        name: "Availability",
-        components: {TableView, TextView, Location, EndTime, StartTime, DateFrom, DateTo, Pencils},
+        name: "EventSearch",
+        components: {TableView, Location, EndTime, StartTime, DateFrom, DateTo, PencilName},
         props: {},
 
         data() {
             return {
-                availability: [],
-                pencils: [],
+                events: [],
                 filters: {
                     dateFrom: null,
                     dateTo: null,
@@ -65,27 +60,19 @@
                     minuteFrom: 0,
                     hourTo: 23,
                     minuteTo: 59,
-                    location: []
-                },
-                includePencils: true,
-                inNameSearch: 'Pencil'
+                    location: [],
+                    in_name: 'pencil'
+                }
             }
         },
 
         methods: {
             search() {
-                this.availability = [];
-                this.pencils = [];
-                this.$http.get('/api/availability', {params: this.params})
-                    .then(response => this.availability = response.data)
+                this.events = [];
+                let params = this.params;
+                this.$http.get('/api/pencils', {params: params})
+                    .then(response => this.events = response.data)
                     .catch(error => console.log(error));
-                if(this.includePencils) {
-                    let params = this.params;
-                    params.in_name = this.inNameSearch;
-                    this.$http.get('/api/pencils', {params: params})
-                        .then(response => this.pencils = response.data)
-                        .catch(error => console.log(error));
-                }
             }
         },
 
@@ -100,23 +87,6 @@
                 return filters;
             },
 
-            results() {
-                return this.availability.map(available => {
-                    return {
-                        location: available.location,
-                        start: moment(available.from),
-                        end: moment(available.to),
-                        available: true
-                    }
-                }).concat(this.pencils.map(pencil => {
-                    return {
-                        location: pencil.location,
-                        start: moment(pencil.start),
-                        end: moment(pencil.end),
-                        available: false
-                    }
-                }));
-            }
         }
     }
 </script>

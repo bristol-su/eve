@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Scan;
 use App\Support\CodeReadr\CodeReadrService;
+use App\Ticket;
 use App\UcEvent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -31,7 +32,8 @@ class UpdateScans implements ShouldQueue
         Redis::throttle('updatescans')->allow(1)->every(20)->then(function() use ($codeReadr) {
             $scans = $codeReadr->scansForEvents(UcEvent::toTrack()->get());
             foreach($scans->scan as $scan) {
-                if(Scan::where('ticket_number', (string)$scan->tid)->count() === 0) {
+                if(Scan::where('ticket_number', (string)$scan->tid)->count() === 0
+                && Ticket::where('ticket_number', (string)$scan->tid)->count() > 0) {
                     Scan::create(['ticket_number' => (string)$scan->tid]);
                 }
             }

@@ -50,13 +50,5 @@ class AvailabilityController extends Controller
 
         return $availabilities;
 
-        $events = Event::where('start', '>=', $startDateTime)
-            ->where('end', '<=', $endDateTime)
-            ->get()
-            ->filter(function($event) use ($request) {
-                return count($request->input('location', [])) === 0
-                    || in_array($event->location, $request->input('location', []));
-            });
-
     }
 }

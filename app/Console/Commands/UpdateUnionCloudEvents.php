@@ -77,9 +77,9 @@ class UpdateUnionCloudEvents extends Command
                 }
             }
             // For each event, save it in the DB or update it
-            Cache::put(UpdateUnionCloudEvents::class . '.page', $page + 1, 20);
+            Cache::put(UpdateUnionCloudEvents::class . '.page', $page + 1, 5000);
         } catch (ResourceNotFoundException $ex) {
-            Cache::put(UpdateUnionCloudEvents::class . '.page', 1, 20);
+            Cache::put(UpdateUnionCloudEvents::class . '.page', 1, 5000);
         }
     }
 }
