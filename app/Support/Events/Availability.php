@@ -2,6 +2,7 @@
 
 namespace App\Support\Events;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 
@@ -9,6 +10,9 @@ class Availability implements Arrayable, Jsonable
 {
 
     public $location;
+    /**
+     * @var Carbon
+     */
     public $from;
     public $to;
     public $pencil = false;

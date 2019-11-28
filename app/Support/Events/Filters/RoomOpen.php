@@ -15,7 +15,10 @@ class RoomOpen extends Filter
     public function unavailable(Availability $availability): ?bool
     {
         $termTime = (TermTime::current()->first()->term_time??false);
-        $openingTimes = RoomOpeningTime::where('location', $availability->location)->where('term_time', $termTime)->first();
+        $openingTimes = RoomOpeningTime::where('location', $availability->location)
+            ->where('term_time', $termTime)
+            ->where('day', $availability->from->format('N'))
+            ->first();
         if($openingTimes !== null && !$this->fullyBetweenTimes($openingTimes->open, $openingTimes->shuts, $availability)) {
             return true;
         }

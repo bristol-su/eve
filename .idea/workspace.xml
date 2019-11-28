@@ -2,30 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f713873-6dd6-454f-a773-b45136f64473" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/EventSearchController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/eventsearch/EventSearch.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/eventsearch/filters/DateFrom.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/eventsearch/filters/DateTo.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/eventsearch/filters/EndTime.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/eventsearch/filters/Location.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/eventsearch/filters/StartTime.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/eventsearch/results/TableView.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/pages/eventsearch.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/eve.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/eve.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/UpdateUnionCloudEvents.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/UpdateUnionCloudEvents.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Event.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Event.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/AvailabilityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/AvailabilityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Jobs/UpdateScans.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/UpdateScans.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/availability/Availability.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/availability/Availability.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/availability/filters/PencilName.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/eventsearch/filters/PencilName.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/codereadr/events/CurrentEvents.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/codereadr/events/CurrentEvents.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/templates/heading.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/templates/heading.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Support/Events/Availability.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Events/Availability.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Support/Events/Filters/RoomOpen.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Events/Filters/RoomOpen.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_10_18_110157_create_room_opening_times_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_10_18_110157_create_room_opening_times_table.php" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -170,9 +152,15 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js/components/eventsearch" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -205,23 +193,23 @@
       <command value="l" />
     </option>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -256,7 +244,9 @@
       <workItem from="1571835244318" duration="896000" />
       <workItem from="1571836457882" duration="275000" />
       <workItem from="1571841660237" duration="142000" />
-      <workItem from="1571993770868" duration="2254000" />
+      <workItem from="1571993770868" duration="2315000" />
+      <workItem from="1571997774348" duration="7000" />
+      <workItem from="1574957836571" duration="505000" />
     </task>
     <servers />
   </component>
@@ -275,5 +265,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="703" height="446" key="SwitcherDM" timestamp="1574958303511">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="703" height="446" key="SwitcherDM/0.27.1920.1053@0.27.1920.1053" timestamp="1574958303511" />
   </component>
 </project>

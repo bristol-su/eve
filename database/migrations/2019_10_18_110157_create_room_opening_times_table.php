@@ -18,6 +18,7 @@ class CreateRoomOpeningTimesTable extends Migration
             $table->time('open');
             $table->time('shuts');
             $table->string('location');
+            $table->unsignedInteger('day');
             $table->boolean('term_time')->default(true);
             $table->timestamps();
         });
