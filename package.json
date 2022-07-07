@@ -25,7 +25,7 @@
     },
     "dependencies": {
         "bootstrap-vue": "^2.0.3",
-        "moment": "^2.24.0",
+        "moment": "^2.29.4",
         "vue-select": "^3.2.0"
     }
 }
